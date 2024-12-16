@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Todo extends Model
+class Task extends Model
 {
-    public $fillable = [
-        'name',
-        'status'
+    protected $fillable = [
+        'title',
+        'status',
     ];
 
-    public $casts = [
+    protected $casts = [
         'status' => TodoStatus::class,
     ];
 }

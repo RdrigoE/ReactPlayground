@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
 
 class TaskController extends Controller
 {
@@ -12,7 +15,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        $tasks = Auth::user()->tasks()->simplePaginate();
+
+        return Inertia::render('Tasks/Index', ['tasks' => $tasks]);
     }
 
     /**
@@ -50,9 +55,20 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $todo)
+    public function update(Request $request, Task $task)
     {
-        //
+        $attributes = $request->input();
+        Log::info($attributes);
+
+        $attributes = $request->validate(
+            [
+                'title'  => ['required', 'min:1', 'max:2048'],
+                'status' => ['nullable'],
+            ]
+        );
+        $task->update($attributes);
+
+        return back();
     }
 
     /**

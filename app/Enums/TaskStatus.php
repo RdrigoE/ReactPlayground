@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Enums;
 
-enum TodoStatus: string
+enum TaskStatus: string
 {
     case PENDING   = 'pending';
     case COMPLETED = 'completed';
